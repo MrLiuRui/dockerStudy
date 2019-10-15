@@ -1,0 +1,8 @@
+镜像生成方法：
+1、dockerFile
+2、从容器创建一个新的镜像
+docker commit [OPTIONS] 容器ID [REPOSITORY[:TAG]]
+
+创建镜像仓库：
+    命名空间
+    仓库名称

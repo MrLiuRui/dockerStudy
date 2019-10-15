@@ -1,0 +1,35 @@
+dockerFile
+对镜像描述的源码，是用来构建Docker镜像的构建文件，是由一系列命令和参数构成的脚本
+
+dockerFile添加：
+1、根目录下新建mydocker文件夹并进入
+2、可在DockerFile中使用VOLUME指令来给镜像添加一个或多个数据卷
+VOLUME["dataVolumeContainer","/dataVolumeContainer2","/dataVolumeContainer3"]
+注：处于可移植和分享的考虑，用-v主机目录:容器目录这种方法不能够直接在DockerFile中实现
+由于宿主机目录是依赖于特定宿主机的，并不能够保证在所有的宿主机上都存在这样的特定目录
+3、File构建
+4、build后生成镜像
+docker build -f /mydocker/dockerfile2 -t liurui/centos .
+5、run容器
+6、可通过docker inspect 容器ID来查找默认文件夹
+##注：Docker挂载主机目录Docker访问出现cannot open directory .:Permission denied
+    解决方法：在挂载目录后多加一个--privileged=true参数即可
+
+dockerFile内容基础知识：
+1、每条保留字指令都必须为大写字母且后面要跟随至少一个参数
+2、指令按照从上到下，顺序执行
+3、#表示注释
+4、每条指令都会创建一个新的镜像层，并对镜像进行提交
+
+docker执行dockerFile的大致流程
+1、docker从基础镜像运行一个容器
+2、执行一条指令并对容器做出修改
+3、执行类似docker commit的操作提交一个新的镜像层
+4、docker再基于刚提交的镜像运行一个新的容器
+5、执行dockerfile中的下一条指令直到所有指令都执行完成
+
+从应用软件的角度来看，dockerFile、Docker镜像和Docker容器分别代表软件的三个不同阶段
+dockerFile：是软件的原材料
+Docker镜像：镜像是软件的交付品
+Docker容器：容器可以认为是软件的运行态
+dockerFile面向开发，Docker镜像成为交付标准，Docker容器则涉及部署与运维，三者缺一不可，合力充当Docker体系的基石
